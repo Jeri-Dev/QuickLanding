@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Ansi from "ansi-to-react";
-import { CheckIcon, CopyIcon, TerminalIcon, Trash2Icon } from "lucide-react";
+import { Button } from "@/components/ui/button"
+import { cn } from "@/src/lib/utils"
+import Ansi from "ansi-to-react"
+import { CheckIcon, CopyIcon, TerminalIcon, Trash2Icon } from "lucide-react"
 import {
   type ComponentProps,
   createContext,
@@ -12,28 +12,28 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { Shimmer } from "./shimmer";
+} from "react"
+import { Shimmer } from "./shimmer"
 
 interface TerminalContextType {
-  output: string;
-  isStreaming: boolean;
-  autoScroll: boolean;
-  onClear?: () => void;
+  output: string
+  isStreaming: boolean
+  autoScroll: boolean
+  onClear?: () => void
 }
 
 const TerminalContext = createContext<TerminalContextType>({
   output: "",
   isStreaming: false,
   autoScroll: true,
-});
+})
 
 export type TerminalProps = HTMLAttributes<HTMLDivElement> & {
-  output: string;
-  isStreaming?: boolean;
-  autoScroll?: boolean;
-  onClear?: () => void;
-};
+  output: string
+  isStreaming?: boolean
+  autoScroll?: boolean
+  onClear?: () => void
+}
 
 export const Terminal = ({
   output,
@@ -71,9 +71,9 @@ export const Terminal = ({
       )}
     </div>
   </TerminalContext.Provider>
-);
+)
 
-export type TerminalHeaderProps = HTMLAttributes<HTMLDivElement>;
+export type TerminalHeaderProps = HTMLAttributes<HTMLDivElement>
 
 export const TerminalHeader = ({
   className,
@@ -89,9 +89,9 @@ export const TerminalHeader = ({
   >
     {children}
   </div>
-);
+)
 
-export type TerminalTitleProps = HTMLAttributes<HTMLDivElement>;
+export type TerminalTitleProps = HTMLAttributes<HTMLDivElement>
 
 export const TerminalTitle = ({
   className,
@@ -105,19 +105,19 @@ export const TerminalTitle = ({
     <TerminalIcon className="size-4" />
     {children ?? "Terminal"}
   </div>
-);
+)
 
-export type TerminalStatusProps = HTMLAttributes<HTMLDivElement>;
+export type TerminalStatusProps = HTMLAttributes<HTMLDivElement>
 
 export const TerminalStatus = ({
   className,
   children,
   ...props
 }: TerminalStatusProps) => {
-  const { isStreaming } = useContext(TerminalContext);
+  const { isStreaming } = useContext(TerminalContext)
 
   if (!isStreaming) {
-    return null;
+    return null
   }
 
   return (
@@ -127,10 +127,10 @@ export const TerminalStatus = ({
     >
       {children ?? <Shimmer className="w-16" />}
     </div>
-  );
-};
+  )
+}
 
-export type TerminalActionsProps = HTMLAttributes<HTMLDivElement>;
+export type TerminalActionsProps = HTMLAttributes<HTMLDivElement>
 
 export const TerminalActions = ({
   className,
@@ -140,13 +140,13 @@ export const TerminalActions = ({
   <div className={cn("flex items-center gap-1", className)} {...props}>
     {children}
   </div>
-);
+)
 
 export type TerminalCopyButtonProps = ComponentProps<typeof Button> & {
-  onCopy?: () => void;
-  onError?: (error: Error) => void;
-  timeout?: number;
-};
+  onCopy?: () => void
+  onError?: (error: Error) => void
+  timeout?: number
+}
 
 export const TerminalCopyButton = ({
   onCopy,
@@ -156,26 +156,26 @@ export const TerminalCopyButton = ({
   className,
   ...props
 }: TerminalCopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const { output } = useContext(TerminalContext);
+  const [isCopied, setIsCopied] = useState(false)
+  const { output } = useContext(TerminalContext)
 
   const copyToClipboard = async () => {
     if (typeof window === "undefined" || !navigator?.clipboard?.writeText) {
-      onError?.(new Error("Clipboard API not available"));
-      return;
+      onError?.(new Error("Clipboard API not available"))
+      return
     }
 
     try {
-      await navigator.clipboard.writeText(output);
-      setIsCopied(true);
-      onCopy?.();
-      setTimeout(() => setIsCopied(false), timeout);
+      await navigator.clipboard.writeText(output)
+      setIsCopied(true)
+      onCopy?.()
+      setTimeout(() => setIsCopied(false), timeout)
     } catch (error) {
-      onError?.(error as Error);
+      onError?.(error as Error)
     }
-  };
+  }
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
+  const Icon = isCopied ? CheckIcon : CopyIcon
 
   return (
     <Button
@@ -190,20 +190,20 @@ export const TerminalCopyButton = ({
     >
       {children ?? <Icon size={14} />}
     </Button>
-  );
-};
+  )
+}
 
-export type TerminalClearButtonProps = ComponentProps<typeof Button>;
+export type TerminalClearButtonProps = ComponentProps<typeof Button>
 
 export const TerminalClearButton = ({
   children,
   className,
   ...props
 }: TerminalClearButtonProps) => {
-  const { onClear } = useContext(TerminalContext);
+  const { onClear } = useContext(TerminalContext)
 
   if (!onClear) {
-    return null;
+    return null
   }
 
   return (
@@ -219,25 +219,25 @@ export const TerminalClearButton = ({
     >
       {children ?? <Trash2Icon size={14} />}
     </Button>
-  );
-};
+  )
+}
 
-export type TerminalContentProps = HTMLAttributes<HTMLDivElement>;
+export type TerminalContentProps = HTMLAttributes<HTMLDivElement>
 
 export const TerminalContent = ({
   className,
   children,
   ...props
 }: TerminalContentProps) => {
-  const { output, isStreaming, autoScroll } = useContext(TerminalContext);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { output, isStreaming, autoScroll } = useContext(TerminalContext)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: output triggers auto-scroll when new content arrives
   useEffect(() => {
     if (autoScroll && containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
     }
-  }, [output, autoScroll]);
+  }, [output, autoScroll])
 
   return (
     <div
@@ -257,5 +257,5 @@ export const TerminalContent = ({
         </pre>
       )}
     </div>
-  );
-};
+  )
+}

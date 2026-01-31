@@ -1,61 +1,61 @@
-"use client";
+"use client"
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
-import { ChevronRightIcon } from "lucide-react";
+} from "@/components/ui/collapsible"
+import { cn } from "@/src/lib/utils"
+import { ChevronRightIcon } from "lucide-react"
 import {
   type ComponentProps,
   createContext,
   type HTMLAttributes,
   useContext,
-} from "react";
+} from "react"
 
-type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 
 interface SchemaParameter {
-  name: string;
-  type: string;
-  required?: boolean;
-  description?: string;
-  location?: "path" | "query" | "header";
+  name: string
+  type: string
+  required?: boolean
+  description?: string
+  location?: "path" | "query" | "header"
 }
 
 interface SchemaProperty {
-  name: string;
-  type: string;
-  required?: boolean;
-  description?: string;
-  properties?: SchemaProperty[];
-  items?: SchemaProperty;
+  name: string
+  type: string
+  required?: boolean
+  description?: string
+  properties?: SchemaProperty[]
+  items?: SchemaProperty
 }
 
 interface SchemaDisplayContextType {
-  method: HttpMethod;
-  path: string;
-  description?: string;
-  parameters?: SchemaParameter[];
-  requestBody?: SchemaProperty[];
-  responseBody?: SchemaProperty[];
+  method: HttpMethod
+  path: string
+  description?: string
+  parameters?: SchemaParameter[]
+  requestBody?: SchemaProperty[]
+  responseBody?: SchemaProperty[]
 }
 
 const SchemaDisplayContext = createContext<SchemaDisplayContextType>({
   method: "GET",
   path: "",
-});
+})
 
 export type SchemaDisplayProps = HTMLAttributes<HTMLDivElement> & {
-  method: HttpMethod;
-  path: string;
-  description?: string;
-  parameters?: SchemaParameter[];
-  requestBody?: SchemaProperty[];
-  responseBody?: SchemaProperty[];
-};
+  method: HttpMethod
+  path: string
+  description?: string
+  parameters?: SchemaParameter[]
+  requestBody?: SchemaProperty[]
+  responseBody?: SchemaProperty[]
+}
 
 export const SchemaDisplay = ({
   method,
@@ -98,9 +98,9 @@ export const SchemaDisplay = ({
       )}
     </div>
   </SchemaDisplayContext.Provider>
-);
+)
 
-export type SchemaDisplayHeaderProps = HTMLAttributes<HTMLDivElement>;
+export type SchemaDisplayHeaderProps = HTMLAttributes<HTMLDivElement>
 
 export const SchemaDisplayHeader = ({
   className,
@@ -113,7 +113,7 @@ export const SchemaDisplayHeader = ({
   >
     {children}
   </div>
-);
+)
 
 const methodStyles: Record<HttpMethod, string> = {
   GET: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
@@ -122,16 +122,16 @@ const methodStyles: Record<HttpMethod, string> = {
   PATCH:
     "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
   DELETE: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-};
+}
 
-export type SchemaDisplayMethodProps = ComponentProps<typeof Badge>;
+export type SchemaDisplayMethodProps = ComponentProps<typeof Badge>
 
 export const SchemaDisplayMethod = ({
   className,
   children,
   ...props
 }: SchemaDisplayMethodProps) => {
-  const { method } = useContext(SchemaDisplayContext);
+  const { method } = useContext(SchemaDisplayContext)
 
   return (
     <Badge
@@ -141,23 +141,23 @@ export const SchemaDisplayMethod = ({
     >
       {children ?? method}
     </Badge>
-  );
-};
+  )
+}
 
-export type SchemaDisplayPathProps = HTMLAttributes<HTMLSpanElement>;
+export type SchemaDisplayPathProps = HTMLAttributes<HTMLSpanElement>
 
 export const SchemaDisplayPath = ({
   className,
   children,
   ...props
 }: SchemaDisplayPathProps) => {
-  const { path } = useContext(SchemaDisplayContext);
+  const { path } = useContext(SchemaDisplayContext)
 
   // Highlight path parameters
   const highlightedPath = path.replace(
     /\{([^}]+)\}/g,
     '<span class="text-blue-600 dark:text-blue-400">{$1}</span>'
-  );
+  )
 
   return (
     <span
@@ -166,18 +166,18 @@ export const SchemaDisplayPath = ({
       dangerouslySetInnerHTML={{ __html: children ?? highlightedPath }}
       {...props}
     />
-  );
-};
+  )
+}
 
 export type SchemaDisplayDescriptionProps =
-  HTMLAttributes<HTMLParagraphElement>;
+  HTMLAttributes<HTMLParagraphElement>
 
 export const SchemaDisplayDescription = ({
   className,
   children,
   ...props
 }: SchemaDisplayDescriptionProps) => {
-  const { description } = useContext(SchemaDisplayContext);
+  const { description } = useContext(SchemaDisplayContext)
 
   return (
     <p
@@ -189,10 +189,10 @@ export const SchemaDisplayDescription = ({
     >
       {children ?? description}
     </p>
-  );
-};
+  )
+}
 
-export type SchemaDisplayContentProps = HTMLAttributes<HTMLDivElement>;
+export type SchemaDisplayContentProps = HTMLAttributes<HTMLDivElement>
 
 export const SchemaDisplayContent = ({
   className,
@@ -202,16 +202,16 @@ export const SchemaDisplayContent = ({
   <div className={cn("divide-y", className)} {...props}>
     {children}
   </div>
-);
+)
 
-export type SchemaDisplayParametersProps = ComponentProps<typeof Collapsible>;
+export type SchemaDisplayParametersProps = ComponentProps<typeof Collapsible>
 
 export const SchemaDisplayParameters = ({
   className,
   children,
   ...props
 }: SchemaDisplayParametersProps) => {
-  const { parameters } = useContext(SchemaDisplayContext);
+  const { parameters } = useContext(SchemaDisplayContext)
 
   return (
     <Collapsible className={cn(className)} defaultOpen {...props}>
@@ -231,11 +231,11 @@ export const SchemaDisplayParameters = ({
         </div>
       </CollapsibleContent>
     </Collapsible>
-  );
-};
+  )
+}
 
 export type SchemaDisplayParameterProps = HTMLAttributes<HTMLDivElement> &
-  SchemaParameter;
+  SchemaParameter
 
 export const SchemaDisplayParameter = ({
   name,
@@ -270,16 +270,16 @@ export const SchemaDisplayParameter = ({
       <p className="mt-1 text-muted-foreground text-sm">{description}</p>
     )}
   </div>
-);
+)
 
-export type SchemaDisplayRequestProps = ComponentProps<typeof Collapsible>;
+export type SchemaDisplayRequestProps = ComponentProps<typeof Collapsible>
 
 export const SchemaDisplayRequest = ({
   className,
   children,
   ...props
 }: SchemaDisplayRequestProps) => {
-  const { requestBody } = useContext(SchemaDisplayContext);
+  const { requestBody } = useContext(SchemaDisplayContext)
 
   return (
     <Collapsible className={cn(className)} defaultOpen {...props}>
@@ -296,17 +296,17 @@ export const SchemaDisplayRequest = ({
         </div>
       </CollapsibleContent>
     </Collapsible>
-  );
-};
+  )
+}
 
-export type SchemaDisplayResponseProps = ComponentProps<typeof Collapsible>;
+export type SchemaDisplayResponseProps = ComponentProps<typeof Collapsible>
 
 export const SchemaDisplayResponse = ({
   className,
   children,
   ...props
 }: SchemaDisplayResponseProps) => {
-  const { responseBody } = useContext(SchemaDisplayContext);
+  const { responseBody } = useContext(SchemaDisplayContext)
 
   return (
     <Collapsible className={cn(className)} defaultOpen {...props}>
@@ -323,10 +323,10 @@ export const SchemaDisplayResponse = ({
         </div>
       </CollapsibleContent>
     </Collapsible>
-  );
-};
+  )
+}
 
-export type SchemaDisplayBodyProps = HTMLAttributes<HTMLDivElement>;
+export type SchemaDisplayBodyProps = HTMLAttributes<HTMLDivElement>
 
 export const SchemaDisplayBody = ({
   className,
@@ -336,12 +336,12 @@ export const SchemaDisplayBody = ({
   <div className={cn("divide-y", className)} {...props}>
     {children}
   </div>
-);
+)
 
 export type SchemaDisplayPropertyProps = HTMLAttributes<HTMLDivElement> &
   SchemaProperty & {
-    depth?: number;
-  };
+    depth?: number
+  }
 
 export const SchemaDisplayProperty = ({
   name,
@@ -354,8 +354,8 @@ export const SchemaDisplayProperty = ({
   className,
   ...props
 }: SchemaDisplayPropertyProps) => {
-  const hasChildren = properties || items;
-  const paddingLeft = 40 + depth * 16;
+  const hasChildren = properties || items
+  const paddingLeft = 40 + depth * 16
 
   if (hasChildren) {
     return (
@@ -408,7 +408,7 @@ export const SchemaDisplayProperty = ({
           </div>
         </CollapsibleContent>
       </Collapsible>
-    );
+    )
   }
 
   return (
@@ -436,10 +436,10 @@ export const SchemaDisplayProperty = ({
         <p className="mt-1 pl-6 text-muted-foreground text-sm">{description}</p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export type SchemaDisplayExampleProps = HTMLAttributes<HTMLPreElement>;
+export type SchemaDisplayExampleProps = HTMLAttributes<HTMLPreElement>
 
 export const SchemaDisplayExample = ({
   className,
@@ -455,4 +455,4 @@ export const SchemaDisplayExample = ({
   >
     {children}
   </pre>
-);
+)

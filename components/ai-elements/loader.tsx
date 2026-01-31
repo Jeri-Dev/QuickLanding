@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
-import type { HTMLAttributes } from "react";
+import { cn } from "@/src/lib/utils"
+import type { HTMLAttributes } from "react"
 
 interface LoaderIconProps {
-  size?: number;
+  size?: number
 }
 
 const LoaderIcon = ({ size = 16 }: LoaderIconProps) => (
@@ -77,11 +77,11 @@ const LoaderIcon = ({ size = 16 }: LoaderIconProps) => (
       </clipPath>
     </defs>
   </svg>
-);
+)
 
 export type LoaderProps = HTMLAttributes<HTMLDivElement> & {
-  size?: number;
-};
+  size?: number
+}
 
 export const Loader = ({ className, size = 16, ...props }: LoaderProps) => (
   <div
@@ -93,4 +93,4 @@ export const Loader = ({ className, size = 16, ...props }: LoaderProps) => (
   >
     <LoaderIcon size={size} />
   </div>
-);
+)
