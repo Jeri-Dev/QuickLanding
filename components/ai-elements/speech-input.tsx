@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { cn } from "@/src/lib/utils"
+import { cn } from "@/lib/utils"
 import { LoaderIcon, MicIcon, SquareIcon } from "lucide-react"
 import {
   type ComponentProps,

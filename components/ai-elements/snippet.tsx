@@ -7,7 +7,7 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group"
-import { cn } from "@/src/lib/utils"
+import { cn } from "@/lib/utils"
 import { CheckIcon, CopyIcon } from "lucide-react"
 import {
   type ComponentProps,

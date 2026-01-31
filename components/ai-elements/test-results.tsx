@@ -6,7 +6,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { cn } from "@/src/lib/utils"
+import { cn } from "@/lib/utils"
 import {
   CheckCircle2Icon,
   ChevronRightIcon,
