@@ -86,6 +86,7 @@ export default function Home() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const hasMessages = messages.length > 0
 
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -120,7 +121,6 @@ export default function Home() {
     setInput("")
     setIsLoading(true)
 
-    // Mostrar selector de paleta
     setTimeout(() => {
       const paletteMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -194,7 +194,7 @@ export default function Home() {
         body: JSON.stringify({
           message: currentContext?.originalMessage || '',
           palette: currentContext?.selectedPalette,
-          style: styleId
+          style: styleId,
         })
       })
 
@@ -208,7 +208,6 @@ export default function Home() {
           type: 'text'
         }
         setMessages(prev => [...prev, assistantMessage])
-
         // Mostrar el HTML en el panel lateral
         if (data.htmlContent) {
           setHtmlPreview(data.htmlContent)
@@ -542,11 +541,11 @@ export default function Home() {
                     className="w-1/2 flex flex-col overflow-hidden bg-white"
                   >
                     {/* Header del panel con botón */}
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50">
-                      <h3 className="text-sm font-semibold text-gray-700">Vista previa</h3>
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-[#1E293B]">
+                      <h3 className="text-sm font-semibold text-white">Vista previa</h3>
                       <button
                         onClick={openInNewTab}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#22D3EE] hover:bg-[#06B6D4] transition-colors text-white text-sm font-medium"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#22D3EE] hover:bg-[#06B6D4] transition-colors text-white text-sm font-medium cursor-pointer"
                       >
                         <ExternalLink className="w-4 h-4" />
                         <span>Abrir en nueva pestaña</span>
