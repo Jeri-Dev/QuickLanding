@@ -1,4 +1,4 @@
-# AI Landing Page Generator
+# QuickLanding
 
 Una aplicación Next.js que utiliza IA para generar landing pages personalizadas
 en tiempo real mediante chat conversacional.
