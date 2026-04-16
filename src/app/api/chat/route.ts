@@ -29,8 +29,8 @@ function getInitialPrompt(wizard: WizardData): string {
   return `Eres un experto en diseño web y landing pages. Genera una landing page completa en HTML con Tailwind CSS.
 
 Requisitos OBLIGATORIOS:
-- Incluir en el <head>: <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3/dist/tailwind.min.css" rel="stylesheet">
-- NO incluir NINGUN tag <script> (ni Tailwind CDN script, ni JS custom)
+- Incluir en el <head>: <script src="https://cdn.tailwindcss.com"></script>
+- NO incluir ningun otro tag <script> aparte del de Tailwind CDN
 - Usar clases de Tailwind para todo el styling
 - Usar clases responsive (sm:, md:, lg:)
 - Estructura minima: Hero con titulo y CTA, seccion de Features/Benefits, seccion CTA final, Footer
@@ -60,8 +60,8 @@ Modifica la landing page segun la peticion del usuario.
 Reglas OBLIGATORIAS:
 - Devolver UNICAMENTE el HTML completo modificado (<!DOCTYPE html>...</html>)
 - Sin explicaciones, sin markdown, sin backticks
-- Mantener <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3/dist/tailwind.min.css" rel="stylesheet"> en el head
-- NO incluir tags <script>
+- Mantener <script src="https://cdn.tailwindcss.com"></script> en el head
+- NO incluir otros tags <script> aparte del de Tailwind CDN
 - Mantener el diseño responsive con clases Tailwind (sm:, md:, lg:)`;
 }
 

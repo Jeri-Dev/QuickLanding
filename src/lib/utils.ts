@@ -74,6 +74,7 @@ const ALLOWED_TAGS = [
   "symbol",
   "text",
   "tspan",
+  "script",
 ];
 
 const ALLOWED_ATTRIBUTES: sanitizeHtml.IOptions["allowedAttributes"] = {
@@ -81,6 +82,7 @@ const ALLOWED_ATTRIBUTES: sanitizeHtml.IOptions["allowedAttributes"] = {
   a: ["href", "target", "rel"],
   img: ["src", "alt", "width", "height", "loading"],
   link: ["rel", "href", "crossorigin"],
+  script: ["src", "crossorigin"],
   meta: ["charset", "name", "content"],
   input: ["type", "placeholder", "value", "name"],
   button: ["type"],

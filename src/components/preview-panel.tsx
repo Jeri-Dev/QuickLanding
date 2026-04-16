@@ -143,7 +143,7 @@ export function PreviewPanel({
         {tab === "preview" ? (
           displayHtml ? (
             <iframe
-              sandbox=""
+              sandbox="allow-scripts"
               srcDoc={displayHtml}
               className="w-full h-full border-0"
               title="Landing page preview"
